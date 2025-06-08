@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_USER=andre-dev
+      - POSTGRES_PASSWORD=bankgrpcrahasia
+      - POSTGRES_DB=bank_grpc_db
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_grpc_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/database.sql
+volumes:
+  postgres_grpc_data:

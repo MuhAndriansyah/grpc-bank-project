@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package bank;
+
+import "bank/v1/type/account.proto";
+import "bank/v1/type/exchange.proto";
+import "bank/v1/type/transaction.proto";
+
+option go_package = "github.com/MuhAndriansyah/grpc-bank-project/proto/bank/v1;bankv1";
+
+
+service BankService {
+    rpc GetCurrentBalance(CurrentBalanceRequest) returns (CurrentBalanceResponse);
+    rpc FetchExchangeRates(ExchangeRateRequest) returns (stream ExchangeRateResponse);
+    rpc SummarizeTransactions(stream Transaction) returns (TransactionSummary);
+}
