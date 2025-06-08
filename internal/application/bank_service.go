@@ -1,6 +1,7 @@
 package application
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -66,5 +67,16 @@ func (s *BankService) CreateTransaction(acct string, t bank.Transaction) (uuid.U
 }
 
 func (s *BankService) CalculateTransactionSummary(tcur *bank.TransactionSummary, trans bank.Transaction) error {
-	panic("unimplement")
+	switch trans.TransactionType {
+	case bank.TransactionTypeIn:
+		tcur.SumIn += trans.Amount
+	case bank.TransactionTypeOut:
+		tcur.SumOut += trans.Amount
+	default:
+		return fmt.Errorf("unknown transaction type %v", trans.TransactionType)
+	}
+
+	tcur.SumTotal = tcur.SumIn - tcur.SumOut
+
+	return nil
 }
